@@ -111,3 +111,15 @@ jobs:
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: go, javascript
+
+      # Here is where you build your code
+      - run: |
+          make bootstrap
+          make release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2  
